@@ -92,8 +92,8 @@ class SMapi(object):
     @param string delayed_id
     @return mixed
     """
-    def delayed_status(self, priority_id):
-        options = {'path':'/delayed/status', 'params':{'priority_id':priority_id}}
+    def delayed_status(self, delayed_id):
+        options = {'path':'/delayed/status', 'params':{'delayed_id':delayed_id}}
         return self.rest(options)
 
     """
