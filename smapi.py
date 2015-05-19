@@ -5,7 +5,7 @@ import json
 
 """SERPmetrics Python-SDK"""
 class SMapi(object):
-    VERSION = 'v0.0.1'
+    VERSION = 'v0.0.2'
 
     api_url = 'http://api.serpmetrics.com'
     user_agent = 'SERPmetrics Python Library'
@@ -34,12 +34,14 @@ class SMapi(object):
 
     @param string or list keyword
     @param list engines
+    @param string location
+    @param string device
     @return mixed
     """
-    def add(self, keyword, engines):
+    def add(self, keyword, engines, location=None, device="desktop"):
     	if not isinstance(engines, list) and len(engines):
     		engines = [engines]
-        options = {'path':'/keywords/add', 'params':{'keyword':keyword, 'engines':engines}}
+        options = {'path':'/keywords/add', 'params':{'keyword':keyword, 'engines':engines, 'location':location, 'device':device}}
         return self.rest(options)
 
     """
@@ -59,10 +61,10 @@ class SMapi(object):
     """
     Adds a new keyword to the priority queue, usage as per add()
     """
-    def priority_add(self, keyword, engines):
+    def priority_add(self, keyword, engines, location=None, device="desktop"):
         if not isinstance(engines, list) and len(engines):
             engines = [engines]
-        options = {'path':'/priority/add', 'params':{'keyword':keyword, 'engines':engines}}
+        options = {'path':'/priority/add', 'params':{'keyword':keyword, 'engines':engines, 'location':location, 'device':device}}
         return self.rest(options)
 
     """
@@ -73,6 +75,25 @@ class SMapi(object):
     """
     def priority_status(self, priority_id):
         options = {'path':'/priority/status', 'params':{'priority_id':priority_id}}
+        return self.rest(options)
+
+    """
+    Adds a new keyword to the delayed queue, usage as per add()
+    """
+    def delayed_add(self, keyword, engines, location=None, device="desktop"):
+        if not isinstance(engines, list) and len(engines):
+            engines = [engines]
+        options = {'path':'/delayed/add', 'params':{'keyword':keyword, 'engines':engines, 'location':location, 'device':device}}
+        return self.rest(options)
+
+    """
+    Gets status for a given delayed_id
+
+    @param string delayed_id
+    @return mixed
+    """
+    def delayed_status(self, priority_id):
+        options = {'path':'/delayed/status', 'params':{'priority_id':priority_id}}
         return self.rest(options)
 
     """
